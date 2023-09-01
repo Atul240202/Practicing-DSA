@@ -1,3 +1,5 @@
+// Brute force & Optimal approach using Map
+
 #include <bits/stdc++.h>
 
 int LongestSubsetWithZeroSum(vector < int > arr) {
@@ -33,4 +35,33 @@ int LongestSubsetWithZeroSum(vector < int > arr) {
   }
   return len;
 
+}
+
+// Optimal approach using Set
+
+#include <bits/stdc++.h>
+
+int LongestSubsetWithZeroSum(std::vector<int> arr) {
+    int n = arr.size();
+    int len = 0;
+    std::set<int> sumSet;  // Use a set to store cumulative sums.
+
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += arr[i];
+
+        if (sum == 0) {
+            len = i + 1;
+        } else {
+            // Check if the same sum has been encountered before
+            if (sumSet.find(sum) != sumSet.end()) {
+                len = std::max(len, i - *sumSet.find(sum));
+            } else {
+                // Store the sum in the set
+                sumSet.insert(sum);
+            }
+        }
+    }
+
+    return len;
 }
